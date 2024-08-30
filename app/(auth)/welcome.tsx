@@ -1,10 +1,12 @@
 import { router } from "expo-router";
 import { useRef, useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View, Dimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Swiper from "react-native-swiper";
 import { onboarding } from "../../constants";
 import CustomButton from "@/components/CustomButton";
+
+const { width } = Dimensions.get("window");
 
 const Home = () => {
   const swiperRef = useRef<Swiper>(null);
@@ -12,15 +14,16 @@ const Home = () => {
   const isLastSlide = activeIndex === onboarding.length - 1;
 
   return (
-    <SafeAreaView className="flex h-full items-center justify-between bg-white">
-      <TouchableOpacity
-        onPress={() => {
-          router.replace("/(auth)/sign-up");
-        }}
-        className="w-full flex justify-end items-end p-5"
-      >
-        <Text className="text-black text-md font-JakartaBold">Skip</Text>
-      </TouchableOpacity>
+    <SafeAreaView className="flex-1 bg-white">
+      <View className="w-full flex justify-end items-end p-5">
+        <TouchableOpacity
+          onPress={() => {
+            router.replace("/(auth)/sign-up");
+          }}
+        >
+          <Text className="text-black text-md font-JakartaBold">Skip</Text>
+        </TouchableOpacity>
+      </View>
 
       <Swiper
         ref={swiperRef}
@@ -36,7 +39,7 @@ const Home = () => {
         {onboarding.map((item) => (
           <View
             key={item.id}
-            className="flex-1 items-center justify-center p-5"
+            className="flex-1 items-center justify-center px-5"
           >
             <Image
               source={item.image}
@@ -54,15 +57,18 @@ const Home = () => {
           </View>
         ))}
       </Swiper>
-      <CustomButton
-        title={isLastSlide ? "Get Started" : "Next"}
-        onPress={() =>
-          isLastSlide
-            ? router.replace("/(auth)/sign-in")
-            : swiperRef.current?.scrollBy(1)
-        }
-        className="w-11/12 mt-10"
-      />
+
+      <View className="w-full items-center justify-center mb-10">
+        <CustomButton
+          title={isLastSlide ? "Get Started" : "Next"}
+          onPress={() =>
+            isLastSlide
+              ? router.replace("/(auth)/sign-up")
+              : swiperRef.current?.scrollBy(1)
+          }
+          className="w-11/12 mt-10"
+        />
+      </View>
     </SafeAreaView>
   );
 };
