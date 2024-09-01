@@ -9,10 +9,13 @@ export default function Home() {
   return (
     <SafeAreaView>
       <SignedIn>
-        <Text>{user?.emailAddresses[0].emailAddress}</Text>
+        <View>
+          <Text>{user?.fullName}</Text>
+          <Text>{user?.emailAddresses[0].emailAddress}</Text>
+        </View>
       </SignedIn>
       <SignedOut>
-        <Link href="/(auth)/sign-up">Sign up</Link>
+        <Link href="/(auth)/sign-up">Sign Up</Link>
       </SignedOut>
     </SafeAreaView>
   );
